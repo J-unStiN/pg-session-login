@@ -1,0 +1,26 @@
+version: '3.8'
+
+name:  security-db
+
+services:
+  redis:
+    hostname: sa
+    image: redis:7.2-alpine
+    volumes:
+      - ./data/redis:/data
+    ports:
+      - "16379:6379"
+    restart: always
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: roo1234
+      MYSQL_DATABASE: pg-db
+      MYSQL_USER: pg
+      MYSQL_PASSWORD: pg1234
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    restart: always
