@@ -14,9 +14,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.config.http.SessionCreationPolicy
 
 @Configuration
@@ -44,16 +41,7 @@ class SecurityConfig {
     @Bean
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager =
         config.authenticationManager
-
-    // 데모용 사용자 저장소(실서비스에서는 교체)
-    @Bean
-    fun userDetailsService(passwordEncoder: PasswordEncoder): UserDetailsService {
-        val user = User.withUsername("user")
-            .password(passwordEncoder.encode("password"))
-            .roles("USER")
-            .build()
-        return InMemoryUserDetailsManager(user)
-    }
+    
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
